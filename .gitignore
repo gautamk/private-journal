@@ -33,3 +33,10 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+# Created by http://gitignore.io
+
+### IntelliJ ###
+*.iml
+*.ipr
+*.iws
+.idea/

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Journal</title>
+</head>
+<body>
+<div>
+    <form action="." method="post">
+        <p>
+            <input type="text" name="title" placeholder="title"/>
+        </p>
+        <p>
+            <textarea name="body" id="" cols="30" rows="10"></textarea>
+        </p>
+        <button type="submit">Post</button>
+    </form>
+</div>
+
+{% for post in posts %}
+<div>
+    <h2>{{ post.title }}</h2>
+    {{ post.created_at }}
+    <pre>{{ post.body }}</pre>
+</div>
+{% endfor %}
+</body>
+</html>
