@@ -22,6 +22,12 @@
         theme:{
              editor: '/themes/editor/epic-light.css'
         },
+    {% if post %}
+        localStorageName: '{{ post.key.urlsafe() }}',
+        file:{
+            name:'{{ post.key.urlsafe() }}'
+        },
+    {% endif %}
         autogrow:true
     }).load();
 </script>
