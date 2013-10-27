@@ -4,6 +4,13 @@
     <a href="/new/post" class="btn btn-lg btn-primary btn-block" style="margin: 2% 0;">New</a>
     {% for post in posts %}
     <div class="well well-lg">
+        <a href="/post/delete/{{post.key.urlsafe()}}"
+           rel="tooltip"
+           data-placement="left"
+           title="Delete {{ post.title }}"
+           class="pull-right btn btn-xs btn-danger">
+            <span class="glyphicon glyphicon-trash"></span>
+        </a>
         <h2>{{ post.title }}</h2>
         <a href="/post/{{post.key.urlsafe()}}" data-placement="right" data-toggle="tooltip" rel="tooltip" title="{{ post.modified_at }}">
             {{ post.modified_at | pretty_time }}
