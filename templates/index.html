@@ -3,7 +3,7 @@
 <div class="container">
     <a href="/new/post" class="btn btn-lg btn-primary btn-block" >New</a>
     {% for post in posts %}
-    <div>
+    <div class="well well-lg">
         <h2>{{ post.title }}</h2>
         <a href="/post/{{post.key.urlsafe()}}" title="{{ post.modified_at }}">
             {{ post.modified_at | pretty_time }}
