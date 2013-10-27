@@ -5,7 +5,7 @@
     {% for post in posts %}
     <div class="well well-lg">
         <h2>{{ post.title }}</h2>
-        <a href="/post/{{post.key.urlsafe()}}" title="{{ post.modified_at }}">
+        <a href="/post/{{post.key.urlsafe()}}" data-placement="right" data-toggle="tooltip" rel="tooltip" title="{{ post.modified_at }}">
             {{ post.modified_at | pretty_time }}
         </a>
 
