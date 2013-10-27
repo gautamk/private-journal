@@ -4,27 +4,27 @@
     <div class="form-group">
         <input type="text" name="title" class="form-control" placeholder="title" value="{{ post.title }}" required/>
     </div>
-    <div class="form-group" >
+    <div class="form-group">
         <div id="epiceditor"></div>
         <textarea style="display: none" id="form-post-body" class="form-control" name="body" id="" rows="5" required>{{post.body}}</textarea>
     </div>
     <div class="form-group">
-        <button class="btn btn-primary btn-lg btn-block" type="submit"  style="margin: 2% 0;" >Save</button>
-        <a class="btn btn-danger btn-lg btn-block" type="button" href="/" style="margin: 2% 0;" >Cancel</a>
+        <button class="btn btn-primary btn-lg btn-block" type="submit" style="margin: 2% 0;">Save</button>
+        <a class="btn btn-danger btn-lg btn-block" type="button" href="/" style="margin: 2% 0;">Cancel</a>
     </div>
 </form>
 <script src="/static/js/epiceditor.min.js"></script>
 <script>
     var editor = new EpicEditor({
-        container:"epiceditor",
-        textarea:"form-post-body",
-        basePath:'/static/css/epiceditor',
-        theme:{
-             editor: '/themes/editor/epic-light.css'
+        container: "epiceditor",
+        textarea: "form-post-body",
+        basePath: '/static/css/epiceditor',
+        theme: {
+            editor: '/themes/editor/epic-light.css'
         },
     {% if post %}
         localStorageName: '{{ post.key.urlsafe() }}',
-        file:{
+        file :{
             name:'{{ post.key.urlsafe() }}'
         },
     {% endif %}
@@ -32,3 +32,11 @@
     }).load();
 </script>
 {% endblock %}
+
+{% block title %}
+{%if post%}
+        {{post.title}}
+{%else%}
+        New Post
+{%endif%}
+{%endblock%}
