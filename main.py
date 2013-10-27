@@ -33,6 +33,12 @@ class BaseHandler(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template(template_name)
         self.response.write(template.render(template_values))
 
+    def _get_title(self):
+        return self.request.get("title")
+    def _get_body(self):
+        return self.request.get("body")
+
+
 
 
 class MainHandler(BaseHandler):
@@ -41,29 +47,29 @@ class MainHandler(BaseHandler):
         self.write_template("index.html",{
             "posts":posts
         })
-    def post(self):
-        title = self.request.get("title")
-        body = self.request.get("body")
-        post = BlogPost(title = title, body = body)
-        post.put()
-        self.redirect("/")
 
 
 class PostHandler(BaseHandler):
-    def get(self,post_id):
-        post = ndb.Key(urlsafe=post_id).get()
+    def get(self,post_id = None):
+        post = None if post_id == None else ndb.Key(urlsafe=post_id).get()
+
         self.write_template("post.html",{
             "post":post
         })
 
-    def post(self,post_id):
-        post = ndb.Key(urlsafe=post_id).get()
-        post.title = self.request.get("title")
-        post.body  = self.request.get("body")
+    def post(self,post_id=None):
+        title = self._get_title()
+        body  = self._get_body()
+
+        post = BlogPost() if post_id == None else ndb.Key(urlsafe = post_id).get()
+
+        post.title = title
+        post.body  = body
         post.put()
         self.redirect("/")
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
+    ('/new/post',PostHandler),
     ('/post/(.*)',PostHandler)
 ], debug=True)
