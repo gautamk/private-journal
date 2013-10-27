@@ -15,14 +15,18 @@
 # limitations under the License.
 #
 import os
+from google.appengine.ext import ndb
 import webapp2
 import jinja2
 from models.blog import BlogPost
+from util.custom_filters.pretty_time import pretty_time
+from util.custom_filters.render_markdown import render_markdown
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__),"templates")),
     extensions=['jinja2.ext.autoescape'])
-
+JINJA_ENVIRONMENT.filters["pretty_time"] = pretty_time
+JINJA_ENVIRONMENT.filters["render_markdown"] = render_markdown
 
 class BaseHandler(webapp2.RequestHandler):
     def write_template(self,template_name ,template_values):
@@ -45,6 +49,21 @@ class MainHandler(BaseHandler):
         self.redirect("/")
 
 
+class PostHandler(BaseHandler):
+    def get(self,post_id):
+        post = ndb.Key(urlsafe=post_id).get()
+        self.write_template("post.html",{
+            "post":post
+        })
+
+    def post(self,post_id):
+        post = ndb.Key(urlsafe=post_id).get()
+        post.title = self.request.get("title")
+        post.body  = self.request.get("body")
+        post.put()
+        self.redirect("/")
+
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/post/(.*)',PostHandler)
 ], debug=True)
