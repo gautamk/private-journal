@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
 {% block body %}
+<style type="text/css">
+    .post-container .post-actions {
+        visibility: hidden;
+    }
+    .post-container:hover .post-actions{
+        visibility: visible;
+    }
+</style>
 <div class="container">
     <a href="/new/post" class="btn btn-lg btn-primary btn-block" style="margin: 2% 0;">New</a>
     {% for post in posts %}
-    <div class="well well-lg">
-        <div class="btn-group pull-right">
+    <div class="well well-lg post-container">
+        <div class="btn-group pull-right post-actions">
             <a href="/post/delete/{{post.key.urlsafe()}}"
                rel="tooltip"
                data-placement="bottom"
