@@ -29,7 +29,7 @@
             </a>
         </div>
         <h2>{{ post.title }}</h2>
-        <span  data-placement="right" data-toggle="tooltip" rel="tooltip" title="{{ post.modified_at }}">
+        <span  data-placement="right" data-toggle="tooltip" rel="tooltip" title="{{ post.modified_at.strftime('%a %Y-%m-%d %I:%M %p %z') }}">
             {{ post.modified_at | pretty_time }}
         </span>
 
